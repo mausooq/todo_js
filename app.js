@@ -22,17 +22,36 @@ app.get('/todos/:id',(req,res) => {
     if(todoIndex == -1)
         res.status(404).send("NOT FOUND");
     else{
-        res.json(todos[todoIndex]);
+        res.send(todos[todoIndex]);
     }
 })
-app.post('/todos/:id',(req,res) => {
-    const {itle,description}=req.body;
+app.post('/todos',(req,res) => {
+    const {title,description}=req.body;
+    const id = Math.floor(Math.random() * 1000000000);
+    const newTodo = {id,title,description}
+    todos.push(newTodo);
+    res.status(201).send(newTodo);
 })
 app.put('/todos',(req,res) => {
-    console.log(`todo update`)
+   const todoIndex = findIndex(todos,parseInt(req.params.id))
+   if(todoIndex == -1){
+    res.status(404).send("ID NOT FOUND");
+   }
+   else{
+    const {title,description} = req.body;
+    todos[todoIndex] = {title,description}
+    res.status(200).send(todos[todoIndex]);
+   }
 })
 app.delete('/todos/:id',(req,res) => {
-    console.log(`todo delete id: ${req.params.id}`)
+   const  todoIndex = findIndex(todos,parseInt(req.params.id))
+   if (todoIndex==-1){
+    res.status(404).send('ID NOT Found')
+   }
+   else{
+    todos.splice(todoIndex,1);
+    res.status(200).send('Deleted Successfully');
+   }
 })
 
 app.listen(2000,(req,res) => {
