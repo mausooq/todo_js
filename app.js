@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser')
-
+const path =require('path')
 const app =express();
 app.use(bodyParser.json());
 
@@ -54,7 +54,9 @@ app.delete('/todos/:id',(req,res) => {
     res.status(200).send('Deleted Successfully');
    }
 })
-
+app.get('/',(req,res)=>{
+    res.sendFile(path.join(__dirname,'./index.html'))
+})
 app.listen(2000,(req,res) => {
     console.log(`server started on port  2000`)
 
