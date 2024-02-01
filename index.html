@@ -13,6 +13,7 @@
     <br><br>
     <button onclick="onePress()">Send TODO</button>
     <br>
+    <h1>TODO LIST</h1>
     <div id="mainArea">
 
     </div>
@@ -24,8 +25,27 @@
             mathod:"GET",
         }).then((res)=>{
             res.json().then((data)=>{
+                // console.log(data);
                 let mainArea = document.getElementById('mainArea');
-                 mainArea.innerHTML=JSON.stringify(data)
+                //  mainArea.innerHTML=JSON.stringify(data)
+                for (let i = 0; i < data.length; i++) {
+                    let childArea =document.createElement('div');
+
+                    let childCont1 = document.createElement('span');
+                    childCont1.innerHTML=data[i].title;
+
+                    let childCont2 = document.createElement('span');
+                    childCont2.innerHTML=data[i].description;
+
+                    let delbtn = document.createElement('button');
+                    childCont2.innerHTML='delete';
+
+                    childArea.appendChild(childCont1);
+                    childArea.appendChild(childCont2);
+                    childArea.appendChild(delbtn);
+
+                    mainArea.appendChild(childArea);
+                }
             })
         })
     }
