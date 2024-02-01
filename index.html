@@ -12,26 +12,41 @@
     <input type="text" id="disc"></input>
     <br><br>
     <button onclick="onePress()">Send TODO</button>
+    <br>
+    <div id="mainArea">
+
+    </div>
 </body>
 <script>
-    function paresResponse(data){
-        alert(data)
+    getData();
+    function getData(){
+        fetch('http://localhost:2000/todos',{
+            mathod:"GET",
+        }).then((res)=>{
+            res.json().then((data)=>{
+                let mainArea = document.getElementById('mainArea');
+                 mainArea.innerHTML=JSON.stringify(data)
+            })
+        })
     }
-    function calback(resp){
-        // alert("The task has been added");
-        resp.json().then(paresResponse)
-    }
+
     function onePress () {
+        var title =document.getElementById("title").value;
+        var description =document.getElementById("disc").value;
       fetch("http://localhost:2000/todos",{
         method:"POSt",
         body:JSON.stringify({
-            title:"hello",
-            description:"world"
+            title,
+            description,
         }),
         headers:{
             "Content-Type":"application/json"
         }
-    }).then(callback)
+    }).then((res)=>{
+        res.json().then((data)=>{
+            alert("The task has been added")
+        })
+    })
     }
 </script>
 </html>
