@@ -33,12 +33,13 @@
 
                     let childCont1 = document.createElement('span');
                     childCont1.innerHTML=data[i].title;
-
+                    
                     let childCont2 = document.createElement('span');
                     childCont2.innerHTML=data[i].description;
 
                     let delbtn = document.createElement('button');
-                    childCont2.innerHTML='delete';
+                    delbtn.innerHTML='delete';
+                    delbtn.setAttribute("onclick","deleteTodo("+data[i].id+")");
 
                     childArea.appendChild(childCont1);
                     childArea.appendChild(childCont2);
@@ -64,9 +65,39 @@
         }
     }).then((res)=>{
         res.json().then((data)=>{
-            alert("The task has been added")
+            // let mainArea = document.getElementById('mainArea');
+            //     //  mainArea.innerHTML=JSON.stringify(data)
+            //         let childArea =document.createElement('div');
+
+            //         let childCont1 = document.createElement('span');
+            //         childCont1.innerHTML=data.title;
+                    
+            //         let childCont2 = document.createElement('span');
+            //         childCont2.innerHTML=data.description;
+
+            //         let delbtn = document.createElement('button');
+            //         delbtn.innerHTML='delete';
+                   
+            //         childArea.appendChild(childCont1);
+            //         childArea.appendChild(childCont2);
+            //         childArea.appendChild(delbtn);
+
+            //         mainArea.appendChild(childArea);
+            
         })
     })
+    }
+
+    function deleteTodo(id){
+        // console.log(id)
+        fetch("http://localhost:2000/todos/"+id,{
+            method:"DELETE",
+            headers:{
+                "Content-Type":"appliction/json"
+            }
+        }).then(()=>{
+         location.reload();
+        })
     }
 </script>
 </html>
